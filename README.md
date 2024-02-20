@@ -1,6 +1,6 @@
 # Monsters Rolodex
 
-Monsters Rolodex is a simple React application that fetches data from a JSON API and displays it in a searchable list of cards.
+Monsters Rolodex is a simple React application using Class components that fetches data from a JSON API and displays it in a searchable list of cards.
 
 ## Features
 
