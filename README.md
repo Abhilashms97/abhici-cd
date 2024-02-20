@@ -13,7 +13,11 @@ Monsters Rolodex is a simple React application that fetches data from a JSON API
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/monsters-rolodex.git
+git clone git@github.com:ipavanteja/monsters-rolodex.git
+```
+
+```bash
+git clone https://github.com/ipavanteja/monsters-rolodex.git
 ```
 
 2. Navigate into the project directory:
