@@ -36,3 +36,4 @@ jobs:
         key: ${{ secrets.SSH_KEY }}  # Add your SSH private key in GitHub secrets
         source: "./*"  # Source directory (root of the project)
         target: "/var/www/abhi.icamp.tech"  # Path to where you want to deploy the app on the server
+
