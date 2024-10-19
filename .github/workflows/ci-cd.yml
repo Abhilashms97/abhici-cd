@@ -15,10 +15,10 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3  # Check out the repository's code
+      uses: actions/checkout@v4.2.1  # Check out the repository's code
 
     - name: Set up Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4.0.4
       with:
         node-version: '20'  # Adjust to the Node.js version used in your project
 
