@@ -29,11 +29,10 @@ jobs:
       run: npm run build  # Build the app (use if your project has a build process)
 
     - name: Deploy to server
-      uses: easingthemes/ssh-deploy@v2.2.0
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}  # Add your SSH private key in GitHub secrets
-        ARGS: "-rltgoDzvO --delete"
-        SOURCE: "./"  # Source directory (root of the project)
-        REMOTE_HOST: "abhi.icamp.tech"  # Your server's IP address
-        REMOTE_USER: "root"  # SSH user (likely root)
-        TARGET: "/var/www/myapp"  # Path to where you want to deploy the app on the server
+      uses: appleboy/scp-action@v1.0.0  # Use appleboy/scp-action for deployment
+      with:
+        host: 65.109.130.211  # Your server's IP address
+        username: root  # SSH user (likely root)
+        key: ${{ secrets.SSH_KEY }}  # Add your SSH private key in GitHub secrets
+        source: "./*"  # Source directory (root of the project)
+        target: "/var/www/abhi.icamp.tech"  # Path to where you want to deploy the app on the server
