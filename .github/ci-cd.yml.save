@@ -1,0 +1,42 @@
+name: CI/CD Pipeline  # Name of your workflow
+
+# Trigger the workflow on pushes to the 'main' branch and on pull requests to 'main'
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Use the latest Ubuntu as the runner environment
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2  # Check out the repository's code
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'  # Adjust to the Node.js version used in your project
+
+    - name: Install dependencies
+      run: npm install  # Install the necessary dependencies
+
+    - name: Run tests
+      run: npm test  # Run tests (ensure tests are configured, or remove if none)
+
+    - name: Build the app
+      run: npm run build  # Build the app (use if your project has a build process)
+
+    - name: Deploy to server
+      uses: easingthemes/ssh-deploy@v2.1.5
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}  # Add your SSH private key in GitHub secrets
+        ARGS: "-rltgoDzvO --delete"
+        SOURCE: "./"  # Source directory (root of the project)
+        REMOTE_HOST: "your-server-ip"  # Your server's IP address
+        REMOTE_USER: "root"  # SSH user (likely root)
+        TARGET: "/path/to/your/app/on/server"  # Path to where you want to deploy the app on the server
