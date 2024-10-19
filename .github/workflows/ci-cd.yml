@@ -15,12 +15,12 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2  # Check out the repository's code
+      uses: actions/checkout@v3  # Check out the repository's code
 
     - name: Set up Node.js
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v3
       with:
-        node-version: '18'  # Adjust to the Node.js version used in your project
+        node-version: '20'  # Adjust to the Node.js version used in your project
 
     - name: Install dependencies
       run: npm install  # Install the necessary dependencies
@@ -29,7 +29,7 @@ jobs:
       run: npm run build  # Build the app (use if your project has a build process)
 
     - name: Deploy to server
-      uses: easingthemes/ssh-deploy@v2.1.5
+      uses: easingthemes/ssh-deploy@v2.2.0
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}  # Add your SSH private key in GitHub secrets
         ARGS: "-rltgoDzvO --delete"
