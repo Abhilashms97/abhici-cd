@@ -29,7 +29,9 @@ jobs:
       run: npm run build  # Build the app (use if your project has a build process)
 
     - name: Deploy to server
-      run: |
-        ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_KEY }} root@37.27.223.110 "cd /var/www/hackathon.icamp.tech && git pull origin main && npm install && pm2 restart all"
-      env:
-        SSH_KEY: ${{ secrets.SSH_KEY }}  # Use GitHub Secrets to store your private key
+  run: |
+    echo "$SSH_KEY" > private_key.pem
+    chmod 600 private_key.pem
+    ssh -o StrictHostKeyChecking=no -i private_key.pem root@37.27.223.110 "cd /var/www/hackathon.icamp.tech && git pull origin main && npm install && pm2 restart all"
+  env:
+    SSH_KEY: ${{ secrets.SSH_KEY }}  # This will reference your secret
