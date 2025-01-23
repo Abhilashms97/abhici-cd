@@ -1,0 +1,43 @@
+name: CI/CD Pipeline  # Name of your workflow
+
+# Trigger the workflow on pushes to the 'main' branch and on pull requests to 'main'
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Use the latest Ubuntu as the runner environment
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4.2.1  # Check out the repository's code
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4.0.4
+      with:
+        node-version: '20'  # Adjust to the Node.js version used in your project
+
+    - name: Install dependencies
+      run: npm install  # Install the necessary dependencies
+
+    - name: Build the app
+      run: npm run build  # Build the app (use if your project has a build process)
+
+    - name: Set up SSH key
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.ssh_key }}" > ~/.ssh/id_rsa  # Use the correct secret name here
+        chmod 600 ~/.ssh/id_rsa
+      env:
+        SSH_KEY: ${{ secrets.ssh_key }}  # Use the correct secret name here
+
+    - name: Deploy to server
+      run: |
+        scp -r ./build/* root@37.27.223.110:/var/www/hackathon.icamp.tech  # SCP command to copy the build files to your server
+      env:
+        SSH_KEY: ${{ secrets.ssh_key }}  # Use the correct secret name here
