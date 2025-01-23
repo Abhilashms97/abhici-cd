@@ -29,10 +29,7 @@ jobs:
       run: npm run build  # Build the app (use if your project has a build process)
 
     - name: Deploy to server
-      uses: appleboy/scp-action@v0.1.7  # Use appleboy/scp-action for deployment
-      with:
-        host: 37.27.223.110  # Your server's IP address
-        username: root  # SSH user (likely root)
-        key: ${{ secrets.SSH_KEY }}  # Add your SSH private key in GitHub secrets
-        source: "./*"  # Source directory (root of the project)
-        target: "/var/www/hackathon.icamp.tech"  # Path to where you want to deploy the app on the server
+      run: |
+        ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_KEY }} root@37.27.223.110 "cd /var/www/hackathon.icamp.tech && git pull origin main && npm install && pm2 restart all"
+      env:
+        SSH_KEY: ${{ secrets.SSH_KEY }}  # Use GitHub Secrets to store your private key
